@@ -48,7 +48,7 @@ header input, header select {
 
 .consultant img {
   width: 100px;
-  height: 100px;
+  height: auto;
   border-radius: 50%;
 }
 
