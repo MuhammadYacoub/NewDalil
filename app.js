@@ -50,7 +50,7 @@ function displayConsultants(data) {
     const div = document.createElement('div');
     div.classList.add('consultant');
     div.innerHTML = `
-      <img src="images/${consultant.ConsultantID}.jpg" alt="${consultant.Name}" loading="lazy" />
+      <img src="images/${consultant.ConsultantID}.webp" alt="${consultant.Name}" loading="lazy" />
       <h3>${consultant.Name}</h3>
       <div class="details" style="display: none;">
         <hr>

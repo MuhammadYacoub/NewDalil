@@ -1,5 +1,5 @@
 body {
-  font-family: "Alexandria", serif;
+  font-family: "cairo", serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -48,10 +48,59 @@ header input, header select {
 
 .consultant img {
   width: 100px;
-  height: auto;
+  height: 100px;
   border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  object-position: top;
 }
 
 .consultant h3 {
   margin: 0.5rem 0;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filters .form-select {
+  flex: 3;
+  margin: 0 0.5rem;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters .form-select {
+    margin: 0.5rem 0;
+  }
 }
