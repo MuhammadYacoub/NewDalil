@@ -42,8 +42,8 @@ function displayConsultants(data) {
   container.innerHTML = ''; // Clear previous content
 
   // Calculate the range of items for the current page
-  const start = (currentPage - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
+  const start = 0;
+  const end = currentPage * itemsPerPage;
 
   const paginatedData = data.slice(start, end);
   paginatedData.forEach((consultant) => {
@@ -59,7 +59,11 @@ function displayConsultants(data) {
         <p><strong>القطاع:</strong> ${consultant.SectorName}</p>
         <p><strong>العنوان:</strong> ${consultant.Address}</p>
         <p><strong>الهاتف:</strong> ${consultant.PhoneNumber}</p>
+        <p><strong>البريد الإلكتروني:</strong> ${consultant.Email}</p>
       </div>
+      <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')">
+        <i class="fab fa-whatsapp"></i> واتساب
+      </button>
     `;
     container.appendChild(div);
 
@@ -70,29 +74,24 @@ function displayConsultants(data) {
     });
   });
 
-  renderPagination(data);
+  renderLoadMoreButton(data);
 }
 
-function renderPagination(data) {
-  const paginationContainer = document.getElementById('pagination');
-  paginationContainer.innerHTML = ''; // Clear previous pagination
+function renderLoadMoreButton(data) {
+  const loadMoreContainer = document.getElementById('load-more-container');
+  loadMoreContainer.innerHTML = ''; // Clear previous button
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  for (let i = 1; i <= totalPages; i++) {
+  if (currentPage < totalPages) {
     const button = document.createElement('button');
-    button.textContent = i;
-    button.classList.add('pagination-button');
-    if (i === currentPage) {
-      button.classList.add('active');
-    }
-
+    button.textContent = 'Load More';
+    button.classList.add('btn', 'btn-primary', 'mt-4');
     button.addEventListener('click', () => {
-      currentPage = i;
+      currentPage++;
       displayConsultants(data);
     });
-
-    paginationContainer.appendChild(button);
+    loadMoreContainer.appendChild(button);
   }
 }
 
@@ -114,3 +113,6 @@ function filterData(data, container, search, filterRank, filterBranch) {
 
   displayConsultants(filteredData);
 }
+
+// Initial call to display consultants
+displayConsultants(data);
