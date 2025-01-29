@@ -60,10 +60,11 @@ function displayConsultants(data) {
         <p><strong>العنوان:</strong> ${consultant.Address}</p>
         <p><strong>الهاتف:</strong> ${consultant.PhoneNumber}</p>
         <p><strong>البريد الإلكتروني:</strong> ${consultant.Email}</p>
-      </div>
-      <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')">
+        <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')">
         <i class="fab fa-whatsapp"></i> واتساب
       </button>
+      </div>
+      
     `;
     container.appendChild(div);
 
@@ -83,10 +84,10 @@ function renderLoadMoreButton(data) {
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  if (currentPage < totalPages) {
+  if (currentPage * itemsPerPage < data.length) {
     const button = document.createElement('button');
-    button.textContent = 'Load More';
-    button.classList.add('btn', 'btn-primary', 'mt-4');
+    button.innerHTML = 'Load More <i class="fas fa-arrow-down"></i>';
+    button.classList.add('load-more-btn');
     button.addEventListener('click', () => {
       currentPage++;
       displayConsultants(data);
