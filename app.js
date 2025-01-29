@@ -42,8 +42,8 @@ function displayConsultants(data) {
   container.innerHTML = ''; // Clear previous content
 
   // Calculate the range of items for the current page
-  const start = 0;
-  const end = currentPage * itemsPerPage;
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
 
   const paginatedData = data.slice(start, end);
   paginatedData.forEach((consultant) => {
@@ -60,9 +60,18 @@ function displayConsultants(data) {
         <p><strong>العنوان:</strong> ${consultant.Address}</p>
         <p><strong>الهاتف:</strong> ${consultant.PhoneNumber}</p>
         <p><strong>البريد الإلكتروني:</strong> ${consultant.Email}</p>
-        <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')">
-        <i class="fab fa-whatsapp"></i> واتساب
-      </button>
+        <hr>
+        <div class="container card-buttons"> 
+            <button class="btn btn-primary" onclick="window.open('tel:${consultant.PhoneNumber}')" data-toggle="tooltip" title="اتصال">
+                <i class="fas fa-phone"></i>
+            </button>
+            <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')" data-toggle="tooltip" title="واتساب">
+                <i class="fab fa-whatsapp"></i> 
+            </button>
+            <button class="btn btn-primary" onclick="saveAsContact('${consultant.Name}', '${consultant.PhoneNumber}', '${consultant.Email}', '${consultant.Address}')" data-toggle="tooltip" title="حفظ كجهة اتصال">
+                <i class="fas fa-address-book"></i>   
+            </button>
+        </div>
       </div>
       
     `;
@@ -70,7 +79,8 @@ function displayConsultants(data) {
 
     div.addEventListener('click', () => {
       const detailsDiv = div.querySelector('.details');
-      const isVisible = detailsDiv.style.display === 'block';
+      const isVisible = detailsDiv.classList.contains('expanded');
+      detailsDiv.classList.toggle('expanded', !isVisible);
       detailsDiv.style.display = isVisible ? 'none' : 'block';
     });
   });
@@ -84,7 +94,7 @@ function renderLoadMoreButton(data) {
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  if (currentPage * itemsPerPage < data.length) {
+  if (currentPage < totalPages) {
     const button = document.createElement('button');
     button.innerHTML = 'Load More <i class="fas fa-arrow-down"></i>';
     button.classList.add('load-more-btn');
@@ -113,6 +123,27 @@ function filterData(data, container, search, filterRank, filterBranch) {
   });
 
   displayConsultants(filteredData);
+}
+
+// Function to create and download vCard
+function saveAsContact(name, phone, email, address) {
+  const vCardData = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${name}
+TEL:${phone}
+EMAIL:${email}
+ADR:${address}
+END:VCARD
+  `;
+  const blob = new Blob([vCardData], { type: 'text/vcard' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${name}.vcf`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 // Initial call to display consultants
