@@ -40,6 +40,9 @@ function populateFilters(data, filterElement, key) {
   });
 }
 
+
+
+
 function displayConsultants(data) {
   const container = document.getElementById('consultants-container');
 
@@ -72,7 +75,7 @@ function displayConsultants(data) {
           <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')" data-toggle="tooltip" title="واتساب">
             <i class="fab fa-whatsapp"></i>
           </button>
-          <button class="btn btn-primary" onclick="saveAsContact('${consultant.Name}', '${consultant.PhoneNumber}', '${consultant.Email}', '${consultant.Address}')" data-toggle="tooltip" title="حفظ كجهة اتصال">
+          <button class="btn btn-primary" onclick="saveAsContact('${consultant.Name}', '0${consultant.PhoneNumber}', '${consultant.Email}', '${consultant.Address}')" data-toggle="tooltip" title="حفظ كجهة اتصال">
             <i class="fas fa-address-book"></i>
           </button>
           <button class="btn btn-primary" onclick="window.open('mailto:${consultant.Email}')" data-toggle="tooltip" title="البريد الإلكتروني">
