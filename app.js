@@ -54,11 +54,12 @@ function displayConsultants(data) {
       <h5>المستشار</h5>
             <h3>${consultant.Name}</h3>
 
-              <p>${consultant.CurrentRankID}</p>
+              <p>${consultant.CurrentRankID} </p>
 
       <div class="details" style="display: none;">
         <hr> 
-        <p><strong>الدرجـة:    </strong> ${consultant.CurrentRankID}</p>
+        <p><strong>الدرجـة:    </strong>    ${consultant.CurrentRankID}</p>
+        <p><strong>رقم الاقدمية :    </strong> ${consultant.TimeRank}</p>
         <p><strong>الفـــرع:   </strong> ${consultant.BranchName}</p>
         <p><strong>القطاع:     </strong> ${consultant.SectorName}</p>
         <p><strong>العنوان:    </strong> </p>  <a style="color:rgb(70, 71, 71); text-decoration: none" href="https://www.google.com/maps/search/?api=1&query=${consultant.Address}"> <p>  ${consultant.Address}</p> </a>
