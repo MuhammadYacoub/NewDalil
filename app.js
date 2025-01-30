@@ -57,13 +57,12 @@ function displayConsultants(data) {
               <p>${consultant.CurrentRankID}</p>
 
       <div class="details" style="display: none;">
-        <hr>
-        <p><strong>الدرجة:</strong> ${consultant.CurrentRankID}</p>
-        <p><strong>الفرع:</strong> ${consultant.BranchName}</p>
-        <p><strong>القطاع:</strong> ${consultant.SectorName}</p>
-        <p><strong>العنوان:</strong> ${consultant.Address}</p>
-        <p><strong>الهاتف:</strong> ${consultant.PhoneNumber}</p>
-        <p><strong>البريد الإلكتروني:</strong> ${consultant.Email}</p>
+        <hr> 
+        <p><strong>الدرجـة:    </strong> ${consultant.CurrentRankID}</p>
+        <p><strong>الفـــرع:   </strong> ${consultant.BranchName}</p>
+        <p><strong>القطاع:     </strong> ${consultant.SectorName}</p>
+        <p><strong>العنوان:    </strong> </p>  <a style="color:rgb(70, 71, 71); text-decoration: none" href="https://www.google.com/maps/search/?api=1&query=${consultant.Address}"> <p>  ${consultant.Address}</p> </a>
+        <p><strong>الهاتف:     </strong> <a style="color: #28a745; text-decoration: none" href="tel:0${consultant.PhoneNumber}"> 0${consultant.PhoneNumber}</p>
         <hr>
         <div class="container card-buttons"> 
             <button class="btn btn-primary" onclick="window.open('tel:${consultant.PhoneNumber}')" data-toggle="tooltip" title="اتصال">
@@ -75,6 +74,11 @@ function displayConsultants(data) {
             <button class="btn btn-primary" onclick="saveAsContact('${consultant.Name}', '${consultant.PhoneNumber}', '${consultant.Email}', '${consultant.Address}')" data-toggle="tooltip" title="حفظ كجهة اتصال">
                 <i class="fas fa-address-book"></i>   
             </button>
+            <button class="btn btn-primary" onclick="window.open('mailto:${consultant.Email}')" data-toggle="tooltip" title="البريد الإلكتروني">
+                <i class="fas fa-envelope"></i>
+            </button>
+            <button class="btn btn-primary" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${consultant.Address}')" data-toggle="tooltip" title="العنوان">
+                <i class="fas fa-map-marker-alt"></i>
         </div>
       </div>
       
