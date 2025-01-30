@@ -3,7 +3,12 @@ fetch('data/consultants.json')
   .then((response) => response.json())
   .then((data) => initialize(data));
 
+let allData = [];
+let currentPage = 1;
+const itemsPerPage = 50;
+
 function initialize(data) {
+  allData = data;
   const container = document.getElementById('consultants-container');
   const search = document.getElementById('search');
   const filterRank = document.getElementById('filter-rank');
@@ -22,11 +27,12 @@ function initialize(data) {
   search.addEventListener('input', () => filterData(data, container, search, filterRank, filterBranch, filterSector));
   filterRank.addEventListener('change', () => filterData(data, container, search, filterRank, filterBranch, filterSector));
   filterBranch.addEventListener('change', () => filterData(data, container, search, filterRank, filterBranch, filterSector));
+  filterSector.addEventListener('change', () => filterData(data, container, search, filterRank, filterBranch, filterSector));
 }
 
 function populateFilters(data, filterElement, key) {
-  const uniqueValues = [...new Set(data.map((item) => item[key]))];
-  uniqueValues.forEach((value) => {
+  const uniqueValues = [...new Set(data.map(item => item[key]))];
+  uniqueValues.forEach(value => {
     const option = document.createElement('option');
     option.value = value;
     option.textContent = value;
@@ -34,12 +40,8 @@ function populateFilters(data, filterElement, key) {
   });
 }
 
-let currentPage = 1;
-const itemsPerPage = 50;
-
 function displayConsultants(data) {
   const container = document.getElementById('consultants-container');
-  container.innerHTML = ''; // Clear previous content
 
   // Calculate the range of items for the current page
   const start = (currentPage - 1) * itemsPerPage;
@@ -52,37 +54,35 @@ function displayConsultants(data) {
     div.innerHTML = `
       <img src="images/${consultant.ConsultantID}.webp" alt="${consultant.Name}" loading="lazy" />
       <h5>المستشار</h5>
-            <h3>${consultant.Name}</h3>
-
-              <p>${consultant.CurrentRankID} </p>
-
+      <h3>${consultant.Name}</h3>
+      <p>${consultant.CurrentRankID}</p>
       <div class="details" style="display: none;">
-        <hr> 
-        <p><strong>الدرجـة:    </strong>    ${consultant.CurrentRankID}</p>
-        <p><strong>رقم الاقدمية :    </strong> ${consultant.TimeRank}</p>
-        <p><strong>الفـــرع:   </strong> ${consultant.BranchName}</p>
-        <p><strong>القطاع:     </strong> ${consultant.SectorName}</p>
-        <p><strong>العنوان:    </strong> </p>  <a style="color:rgb(70, 71, 71); text-decoration: none" href="https://www.google.com/maps/search/?api=1&query=${consultant.Address}"> <p>  ${consultant.Address}</p> </a>
-        <p><strong>الهاتف:     </strong> <a style="color: #28a745; text-decoration: none" href="tel:0${consultant.PhoneNumber}"> 0${consultant.PhoneNumber}</p>
         <hr>
-        <div class="container card-buttons"> 
-            <button class="btn btn-primary" onclick="window.open('tel:${consultant.PhoneNumber}')" data-toggle="tooltip" title="اتصال">
-                <i class="fas fa-phone"></i>
-            </button>
-            <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')" data-toggle="tooltip" title="واتساب">
-                <i class="fab fa-whatsapp"></i> 
-            </button>
-            <button class="btn btn-primary" onclick="saveAsContact('${consultant.Name}', '${consultant.PhoneNumber}', '${consultant.Email}', '${consultant.Address}')" data-toggle="tooltip" title="حفظ كجهة اتصال">
-                <i class="fas fa-address-book"></i>   
-            </button>
-            <button class="btn btn-primary" onclick="window.open('mailto:${consultant.Email}')" data-toggle="tooltip" title="البريد الإلكتروني">
-                <i class="fas fa-envelope"></i>
-            </button>
-            <button class="btn btn-primary" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${consultant.Address}')" data-toggle="tooltip" title="العنوان">
-                <i class="fas fa-map-marker-alt"></i>
+        <p><strong>الدرجـة:</strong> ${consultant.CurrentRankID}</p>
+        <p><strong>رقم الاقدمية:</strong> ${consultant.TimeRank}</p>
+        <p><strong>الفـــرع:</strong> ${consultant.BranchName}</p>
+        <p><strong>القطاع:</strong> ${consultant.SectorName}</p>
+        <p><strong>العنوان:</strong> <a style="color:rgb(70, 71, 71); text-decoration: none" href="https://www.google.com/maps/search/?api=1&query=${consultant.Address}">${consultant.Address}</a></p>
+        <p><strong>الهاتف:</strong> <a style="color: #28a745; text-decoration: none" href="tel:0${consultant.PhoneNumber}">0${consultant.PhoneNumber}</a></p>
+        <hr>
+        <div class="container card-buttons">
+          <button class="btn btn-primary" onclick="window.open('tel:${consultant.PhoneNumber}')" data-toggle="tooltip" title="اتصال">
+            <i class="fas fa-phone"></i>
+          </button>
+          <button class="btn btn-success" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')" data-toggle="tooltip" title="واتساب">
+            <i class="fab fa-whatsapp"></i>
+          </button>
+          <button class="btn btn-primary" onclick="saveAsContact('${consultant.Name}', '${consultant.PhoneNumber}', '${consultant.Email}', '${consultant.Address}')" data-toggle="tooltip" title="حفظ كجهة اتصال">
+            <i class="fas fa-address-book"></i>
+          </button>
+          <button class="btn btn-primary" onclick="window.open('mailto:${consultant.Email}')" data-toggle="tooltip" title="البريد الإلكتروني">
+            <i class="fas fa-envelope"></i>
+          </button>
+          <button class="btn btn-primary" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${consultant.Address}')" data-toggle="tooltip" title="العنوان">
+            <i class="fas fa-map-marker-alt"></i>
+          </button>
         </div>
       </div>
-      
     `;
     container.appendChild(div);
 
@@ -101,9 +101,7 @@ function renderLoadMoreButton(data) {
   const loadMoreContainer = document.getElementById('load-more-container');
   loadMoreContainer.innerHTML = ''; // Clear previous button
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-
-  if (currentPage < totalPages) {
+  if (currentPage * itemsPerPage < data.length) {
     const button = document.createElement('button');
     button.innerHTML = 'Load More <i class="fas fa-arrow-down"></i>';
     button.classList.add('load-more-btn');
@@ -115,22 +113,23 @@ function renderLoadMoreButton(data) {
   }
 }
 
-// Add a pagination container in HTML
-document.body.insertAdjacentHTML('beforeend', '<div id="pagination" class="pagination"></div>');
-
-
-function filterData(data, container, search, filterRank, filterBranch) {
+function filterData(data, container, search, filterRank, filterBranch, filterSector) {
   const searchTerm = search.value.toLowerCase();
-  const selectedRank = filterRank.value;
-  const selectedBranch = filterBranch.value;
+  const rank = filterRank.value;
+  const branch = filterBranch.value;
+  const sector = filterSector.value;
 
-  const filteredData = data.filter((item) => {
-    const matchesSearch = item.Name.toLowerCase().includes(searchTerm) || item.BranchName.toLowerCase().includes(searchTerm);
-    const matchesRank = !selectedRank || item.CurrentRankID === selectedRank;
-    const matchesBranch = !selectedBranch || item.BranchName === selectedBranch;
-    return matchesSearch && matchesRank && matchesBranch;
+  const filteredData = data.filter(consultant => {
+    return (
+      (consultant.Name.toLowerCase().includes(searchTerm) || consultant.BranchName.toLowerCase().includes(searchTerm)) &&
+      (rank === '' || consultant.CurrentRankID === rank) &&
+      (branch === '' || consultant.BranchName === branch) &&
+      (sector === '' || consultant.SectorName === sector)
+    );
   });
 
+  container.innerHTML = ''; // Clear previous content
+  currentPage = 1; // Reset to the first page
   displayConsultants(filteredData);
 }
 
@@ -156,4 +155,4 @@ END:VCARD
 }
 
 // Initial call to display consultants
-displayConsultants(data);
+displayConsultants(allData);
