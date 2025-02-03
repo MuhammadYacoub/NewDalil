@@ -195,7 +195,10 @@ header input, header select {
 .container.card-buttons {
   display: flex;
   justify-content: center;
-  gap: 10px; /* Optional: Adds space between buttons */
+  gap: 5px; /* Optional: Adds space between buttons */
+  margin-top: 20px;
+  margin-bottom: 20px;
+  
 }
 
 

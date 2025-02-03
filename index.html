@@ -6,12 +6,43 @@
     <title>دليل المستشارين</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         #loginModal.show {
             backdrop-filter: blur(5px);
         }
         body.modal-open {
             overflow: hidden;
+        }
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .search-bar {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+        }
+        .filters {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
@@ -44,32 +75,23 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">دليل المستشارين</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#">الرئيسية</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">الخدمات الصحية</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">المهارات</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">التواصل</a></li>
-                </ul>
-            </div>
         </div>
     </nav>
 
     <!-- Search Section -->
-    <div class="container my-5">
+    <div class="container my-5 justify-content-center ">
         <h1 class="text-center mb-4">دليل المستشارين</h1>
-        <div class="d-flex justify-content-center">
-            <input id="search" type="text" class="form-control w-50 me-2" placeholder="البحث العام...">
-            <select id="filter-rank" class="form-select w-auto me-2">
+        <div class="search-container">
+            <input id="search" type="text" class="search-bar" placeholder="البحث العام...">
+        </div>
+        <div class="filters mt-3 d-flex justify-content-center mt-2 mx-auto ">
+            <select id="filter-rank" class="form-select w-100">
                 <option selected>اختر الدرجة</option>
             </select>
-            <select id="filter-branch" class="form-select w-auto me-2">
+            <select id="filter-branch" class="form-select w-100">
                 <option selected>اختر الفرع</option>
             </select>
-            <select id="filter-sector" class="form-select w-auto">
+            <select id="filter-sector" class="form-select w-100">
                 <option selected>اختر القطاع</option>
             </select>
         </div>
@@ -82,10 +104,22 @@
     </div>
 
     <script>
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
             event.preventDefault();
-            document.getElementById("loginModal").classList.remove("show", "d-block");
-            document.body.classList.remove("modal-open");
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            const response = await fetch('data/passwords.json');
+            const data = await response.json();
+            const users = data.users;
+            const isValid = users.some(user => user.Username.toString() === username && user.Password === password);
+            
+            if (isValid) {
+                document.getElementById("loginModal").classList.remove("show", "d-block");
+                document.body.classList.remove("modal-open");
+            } else {
+                alert("بيانات تسجيل الدخول غير صحيحة");
+            }
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
