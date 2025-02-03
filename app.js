@@ -118,9 +118,9 @@ function renderLoadMoreButton(data) {
 
 function filterData(data, container, search, filterRank, filterBranch, filterSector) {
   const searchTerm = search.value.toLowerCase();
-  const rank = filterRank.value;
-  const branch = filterBranch.value;
-  const sector = filterSector.value;
+  const rank = filterRank.value === 'اختر الدرجة' ? '' : filterRank.value;
+  const branch = filterBranch.value === 'اختر الفرع' ? '' : filterBranch.value;
+  const sector = filterSector.value === 'اختر القطاع' ? '' : filterSector.value;
 
   const filteredData = data.filter(consultant => {
     return (
