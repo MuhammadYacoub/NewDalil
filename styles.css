@@ -221,7 +221,7 @@ body.modal-open {
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: start; /* Changed from align-items: right to justify-content: start */
+  justify-content: start; 
   padding: 1rem;
   background-color: #333;
   color: #fff;
@@ -237,13 +237,13 @@ body.modal-open {
   color: #fff;
 }
 
-.navbar-collapse {
+/* .navbar-collapse {
   flex-grow: 0;
 }
-
+*/
 .navbar-nav {
   flex-direction: row;
-}
+} 
 
 .nav-item {
   margin-left: 1rem;
@@ -252,7 +252,7 @@ body.modal-open {
 /* Navbar adjustments */
 .navbar-brand {
   display: flex;
-  align-items: center;
+  align-items: right;
   gap: 10px;
 }
 
