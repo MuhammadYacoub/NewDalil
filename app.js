@@ -69,10 +69,10 @@ function displayConsultants(data) {
         <p><strong>الهاتف:</strong> <a style="color: #28a745; text-decoration: none" href="tel:0${consultant.PhoneNumber}">0${consultant.PhoneNumber}</a></p>
         <hr>
         <div class="container card-buttons">
-          <button class="btn btn-primary  btn-sm" onclick="window.open('tel:0${consultant.PhoneNumber}')" data-toggle="tooltip" title="اتصال">
+          <button class="btn btn-primary btn-sm" onclick="window.open('tel:0${consultant.PhoneNumber}')" data-toggle="tooltip" title="اتصال">
             <i class="fas fa-phone"></i>
           </button>
-          <button class="btn btn-success  btn-sm" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')" data-toggle="tooltip" title="واتساب">
+          <button class="btn btn-success btn-sm" onclick="window.open('https://wa.me/+200${consultant.PhoneNumber}')" data-toggle="tooltip" title="واتساب">
             <i class="fab fa-whatsapp"></i>
           </button>
           <button class="btn btn-primary btn-sm" onclick="saveAsContact('${consultant.Name}', '0${consultant.PhoneNumber}', '${consultant.Email}', '${consultant.Address}')" data-toggle="tooltip" title="حفظ كجهة اتصال">
