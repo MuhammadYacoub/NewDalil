@@ -55,7 +55,7 @@ function displayConsultants(data) {
     const div = document.createElement('div');
     div.classList.add('consultant');
     div.innerHTML = `
-      <img src="images/${consultant.ConsultantID}.webp" alt="${consultant.Name}" loading="lazy" />
+      <img src="images/${consultant.ConsultantID}.webp" alt="${consultant.Name}" loading="lazy"  onerror="this.src='/images/clogo.png';">
       <h5>المستشار</h5>
       <h3>${consultant.Name}</h3>
       <p>${consultant.CurrentRankID}</p>
