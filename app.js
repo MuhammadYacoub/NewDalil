@@ -1,5 +1,5 @@
 // Load JSON data
-fetch('data/consultants.json')
+fetch('data/simpledata2.json')
   .then((response) => response.json())
   .then((data) => initialize(data));
 
